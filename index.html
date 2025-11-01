@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Ayuda al Lobo a Escapar! - Juego de Divisiones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(to bottom, #87CEEB 0%, #98D8C8 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .game-container {
+            background: #8B7355;
+            border: 8px solid #654321;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+        }
+
+        h1 {
+            color: #FFD700;
+            text-align: center;
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 10px;
+            font-size: 2em;
+            image-rendering: pixelated;
+        }
+
+        .story {
+            background: rgba(139, 115, 85, 0.8);
+            color: #FFF;
+            padding: 15px;
+            border: 4px solid #654321;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .game-area {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .wolf-cage {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .cage {
+            width: 100%;
+            height: 100%;
+            border: 6px solid #333;
+            background: linear-repeating-gradient(
+                90deg,
+                transparent,
+                transparent 10px,
+                #666 10px,
+                #666 12px
+            ),
+            linear-repeating-gradient(
+                0deg,
+                transparent,
+                transparent 10px,
+                #666 10px,
+                #666 12px
+            );
+            position: relative;
+            border-radius: 5px;
+        }
+
+        .wolf {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 60px;
+            animation: sad-wolf 1s infinite;
+        }
+
+        @keyframes sad-wolf {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -52%) scale(1.05); }
+        }
+
+        .wolf.happy {
+            animation: happy-wolf 0.5s infinite;
+        }
+
+        @keyframes happy-wolf {
+            0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(-5deg); }
+            50% { transform: translate(-50%, -50%) scale(1.1) rotate(5deg); }
+        }
+
+        .division-box {
+            background: #F5DEB3;
+            border: 5px solid #8B4513;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .division-display {
+            font-size: 3em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .division-visual {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dividend {
+            font-size: 1.2em;
+            padding: 5px 15px;
+            border: 3px solid #8B4513;
+            border-radius: 5px;
+            background: #FFF;
+            margin-bottom: -3px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .divisor-and-box {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .divisor {
+            font-size: 1.2em;
+            padding: 5px 10px;
+            background: #FFF;
+            border: 3px solid #8B4513;
+            border-radius: 5px;
+            margin-right: -3px;
+        }
+
+        .division-house {
+            border-left: 5px solid #8B4513;
+            border-top: 5px solid #8B4513;
+            padding: 10px 10px 5px 10px;
+            min-width: 50px;
+        }
+
+        .answer-input {
+            font-size: 2em;
+            padding: 15px;
+            width: 100%;
+            max-width: 200px;
+            text-align: center;
+            border: 4px solid #8B4513;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            background: #FFF;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #FFD700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.3em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            box-shadow: 0 5px 0 #2E7D32;
+            transition: all 0.1s;
+            margin: 10px;
+        }
+
+        .button:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0 #2E7D32;
+        }
+
+        .button:active {
+            transform: translateY(5px);
+            box-shadow: 0 0 0 #2E7D32;
+        }
+
+        .score {
+            text-align: center;
+            font-size: 1.5em;
+            color: #FFD700;
+            text-shadow: 2px 2px 0 #000;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 1.3em;
+            color: #FFF;
+            text-shadow: 2px 2px 0 #000;
+            min-height: 30px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .explosion {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #ff4500, #ff0000, #8b0000);
+            display: none;
+            z-index: 1000;
+            animation: explode 1s ease-out;
+        }
+
+        @keyframes explode {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+
+        .explosion.active {
+            display: block;
+        }
+
+        .game-over {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #8B4513;
+            border: 8px solid #654321;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+            z-index: 1001;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        .game-over.active {
+            display: block;
+        }
+
+        .game-over h2 {
+            color: #FF4500;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 #000;
+        }
+
+        .victory {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #4CAF50;
+            border: 8px solid #2E7D32;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+            z-index: 1001;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        .victory.active {
+            display: block;
+            animation: victory-bounce 0.5s ease-out;
+        }
+
+        @keyframes victory-bounce {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .victory h2 {
+            color: #FFD700;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 #000;
+        }
+
+        .lives {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .heart {
+            color: #FF0000;
+            margin: 0 5px;
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="explosion" id="explosion"></div>
+
+    <div class="game-container" id="gameContainer">
+        <h1>🐺 ¡Ayuda al Lobo a Escapar! 🐺</h1>
+
+        <div class="story">
+            Un lobo está atrapado en una jaula. ¡Resuelve las divisiones para liberarlo! Pero cuidado... si fallas 3 veces, ¡la pantalla explotará! 💥
+        </div>
+
+        <div class="lives" id="lives">
+            <span class="heart">❤️</span>
+            <span class="heart">❤️</span>
+            <span class="heart">❤️</span>
+        </div>
+
+        <div class="score">
+            <div>Divisiones Resueltas: <span id="score">0</span></div>
+            <div>Necesitas: <span id="target">10</span> para liberar al lobo</div>
+        </div>
+
+        <div class="message" id="message"></div>
+
+        <div class="game-area">
+            <div class="wolf-cage">
+                <div class="cage" id="cage">
+                    <div class="wolf" id="wolf">🐺</div>
+                </div>
+            </div>
+
+            <div class="division-box">
+                <div class="division-display">
+                    <div class="division-visual">
+                        <div class="dividend" id="dividend">12</div>
+                        <div class="divisor-and-box">
+                            <div class="divisor" id="divisor">3</div>
+                            <div class="division-house"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="number"
+                       class="answer-input"
+                       id="answerInput"
+                       placeholder="?"
+                       autofocus>
+
+                <div>
+                    <button class="button" id="checkButton">Verificar ✓</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-over" id="gameOver">
+        <h2>💥 ¡BOOM! 💥</h2>
+        <p style="color: #FFF; font-size: 1.5em; margin-bottom: 20px;">
+            ¡La jaula explotó!<br>
+            Pero el lobo sigue atrapado... 😢
+        </p>
+        <button class="button" onclick="location.reload()">Intentar de Nuevo</button>
+    </div>
+
+    <div class="victory" id="victory">
+        <h2>🎉 ¡VICTORIA! 🎉</h2>
+        <p style="color: #FFF; font-size: 1.5em; margin-bottom: 20px;">
+            ¡Liberaste al lobo! 🐺<br>
+            ¡Ahora es libre! 🌟
+        </p>
+        <button class="button" onclick="location.reload()">Jugar de Nuevo</button>
+    </div>
+
+    <script>
+        // Variables del juego
+        let score = 0;
+        let lives = 3;
+        let currentDividend = 0;
+        let currentDivisor = 0;
+        let currentAnswer = 0;
+        const targetScore = 10;
+
+        // Elementos del DOM
+        const scoreEl = document.getElementById('score');
+        const targetEl = document.getElementById('target');
+        const messageEl = document.getElementById('message');
+        const answerInput = document.getElementById('answerInput');
+        const checkButton = document.getElementById('checkButton');
+        const dividendEl = document.getElementById('dividend');
+        const divisorEl = document.getElementById('divisor');
+        const wolfEl = document.getElementById('wolf');
+        const cageEl = document.getElementById('cage');
+        const livesEl = document.getElementById('lives');
+        const explosionEl = document.getElementById('explosion');
+        const gameOverEl = document.getElementById('gameOver');
+        const victoryEl = document.getElementById('victory');
+        const gameContainer = document.getElementById('gameContainer');
+
+        // Sonidos con Web Audio API
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            if (type === 'correct') {
+                oscillator.frequency.value = 523.25; // C5
+                gainNode.gain.value = 0.3;
+                oscillator.start();
+                setTimeout(() => {
+                    oscillator.frequency.value = 659.25; // E5
+                }, 100);
+                oscillator.stop(audioContext.currentTime + 0.3);
+            } else if (type === 'wrong') {
+                oscillator.frequency.value = 200;
+                gainNode.gain.value = 0.3;
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.3);
+            } else if (type === 'explosion') {
+                oscillator.type = 'sawtooth';
+                oscillator.frequency.value = 100;
+                gainNode.gain.value = 0.5;
+                oscillator.start();
+                setTimeout(() => {
+                    oscillator.frequency.value = 50;
+                }, 200);
+                oscillator.stop(audioContext.currentTime + 0.5);
+            }
+        }
+
+        // Generar nueva división
+        function generateDivision() {
+            // Divisiones exactas para que sea más fácil
+            currentDivisor = Math.floor(Math.random() * 9) + 2; // 2-10
+            currentAnswer = Math.floor(Math.random() * 10) + 1; // 1-10
+            currentDividend = currentDivisor * currentAnswer;
+
+            dividendEl.textContent = currentDividend;
+            divisorEl.textContent = currentDivisor;
+            answerInput.value = '';
+            answerInput.focus();
+            messageEl.textContent = '';
+        }
+
+        // Actualizar vidas
+        function updateLives() {
+            let heartsHTML = '';
+            for (let i = 0; i < lives; i++) {
+                heartsHTML += '<span class="heart">❤️</span>';
+            }
+            for (let i = lives; i < 3; i++) {
+                heartsHTML += '<span class="heart" style="opacity: 0.3;">💔</span>';
+            }
+            livesEl.innerHTML = heartsHTML;
+        }
+
+        // Verificar respuesta
+        function checkAnswer() {
+            const userAnswer = parseInt(answerInput.value);
+
+            if (isNaN(userAnswer)) {
+                messageEl.textContent = '¡Escribe un número!';
+                messageEl.style.color = '#FFA500';
+                return;
+            }
+
+            if (userAnswer === currentAnswer) {
+                // ¡Respuesta correcta!
+                playSound('correct');
+                score++;
+                scoreEl.textContent = score;
+                messageEl.textContent = '¡Correcto! 🎉';
+                messageEl.style.color = '#4CAF50';
+
+                // Animar el lobo
+                wolfEl.classList.add('happy');
+                setTimeout(() => wolfEl.classList.remove('happy'), 1000);
+
+                if (score >= targetScore) {
+                    // ¡Victoria!
+                    setTimeout(() => {
+                        cageEl.style.transition = 'all 1s';
+                        cageEl.style.opacity = '0';
+                        cageEl.style.transform = 'scale(0)';
+                        wolfEl.style.fontSize = '100px';
+
+                        setTimeout(() => {
+                            victoryEl.classList.add('active');
+                        }, 1000);
+                    }, 500);
+                } else {
+                    setTimeout(generateDivision, 1500);
+                }
+            } else {
+                // Respuesta incorrecta
+                playSound('wrong');
+                lives--;
+                updateLives();
+                messageEl.textContent = `¡Incorrecto! ${currentDividend} ÷ ${currentDivisor} = ${currentAnswer}`;
+                messageEl.style.color = '#FF4500';
+
+                gameContainer.classList.add('shake');
+                setTimeout(() => gameContainer.classList.remove('shake'), 500);
+
+                if (lives <= 0) {
+                    // Game Over con explosión
+                    setTimeout(() => {
+                        playSound('explosion');
+                        explosionEl.classList.add('active');
+
+                        setTimeout(() => {
+                            explosionEl.classList.remove('active');
+                            gameOverEl.classList.add('active');
+                        }, 1000);
+                    }, 1000);
+                } else {
+                    setTimeout(generateDivision, 2000);
+                }
+            }
+        }
+
+        // Event listeners
+        checkButton.addEventListener('click', checkAnswer);
+        answerInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        // Iniciar juego
+        generateDivision();
+        updateLives();
+    </script>
+</body>
+</html>
