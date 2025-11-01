@@ -123,66 +123,78 @@
 
         .division-display {
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             font-weight: bold;
             display: flex;
-            align-items: flex-end;
+            align-items: flex-start;
             justify-content: center;
-            gap: 5px;
-            font-size: 2.5em;
+            font-size: 3em;
         }
 
         .division-visual {
-            display: inline-flex;
-            align-items: flex-end;
+            display: inline-block;
             position: relative;
+            padding: 20px;
+        }
+
+        /* La "casita" de división larga */
+        .long-division {
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-template-rows: auto auto;
+            gap: 0;
+            position: relative;
+        }
+
+        /* Cociente arriba - respuesta */
+        .quotient-area {
+            grid-column: 2;
+            grid-row: 1;
+            border-bottom: 5px solid #333;
+            padding: 10px 20px 10px 20px;
+            text-align: center;
+            min-width: 120px;
+            background: #FFF9E6;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .quotient-placeholder {
+            font-size: 0.8em;
+            color: #FF6B6B;
+            font-weight: bold;
         }
 
         /* Divisor a la izquierda */
         .divisor {
-            font-size: 1em;
-            padding: 10px 15px;
-            background: #FFF;
-            border: 4px solid #8B4513;
+            grid-column: 1;
+            grid-row: 2;
+            padding: 15px 20px;
+            background: #E8F5E9;
+            border: 4px solid #4CAF50;
             border-radius: 8px;
-            margin-right: 5px;
             font-weight: bold;
-        }
-
-        /* Contenedor de la "casita" */
-        .division-house {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            position: relative;
-        }
-
-        /* Cociente arriba (donde va la respuesta) */
-        .quotient-placeholder {
-            font-size: 0.7em;
-            color: #999;
-            padding: 5px 15px;
-            margin-bottom: 5px;
-            border-bottom: 4px solid #8B4513;
-            min-width: 80px;
-            text-align: center;
-            font-style: italic;
+            justify-content: center;
+            margin-right: 10px;
         }
 
         /* Dividendo dentro de la casita */
-        .dividend-container {
-            position: relative;
+        .dividend-area {
+            grid-column: 2;
+            grid-row: 2;
+            border-left: 5px solid #333;
+            padding: 15px 20px;
+            background: #FFF;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 120px;
         }
 
         .dividend {
-            font-size: 1em;
-            padding: 15px 20px;
-            background: #FFF;
-            border: 4px solid #8B4513;
-            border-radius: 8px;
             font-weight: bold;
-            min-width: 80px;
-            text-align: center;
         }
 
         .answer-input {
@@ -391,14 +403,20 @@
             <div class="division-box">
                 <div class="division-display">
                     <div class="division-visual">
-                        <!-- Divisor a la izquierda -->
-                        <div class="divisor" id="divisor">3</div>
+                        <div class="long-division">
+                            <!-- Cociente arriba (resultado) -->
+                            <div class="quotient-area">
+                                <span class="quotient-placeholder">?</span>
+                            </div>
 
-                        <!-- La "casita" con cociente arriba y dividendo dentro -->
-                        <div class="division-house">
-                            <div class="quotient-placeholder">?</div>
-                            <div class="dividend-container">
-                                <div class="dividend" id="dividend">12</div>
+                            <!-- Divisor a la izquierda -->
+                            <div class="divisor">
+                                <span id="divisor">3</span>
+                            </div>
+
+                            <!-- Dividendo dentro de la casita -->
+                            <div class="dividend-area">
+                                <span class="dividend" id="dividend">12</span>
                             </div>
                         </div>
                     </div>
