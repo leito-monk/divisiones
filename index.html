@@ -453,6 +453,205 @@
             font-size: 1.1em;
             font-weight: bold;
         }
+
+        /* Responsive design for small screens */
+        @media screen and (max-width: 480px) {
+            body {
+                overflow-y: auto;
+            }
+
+            .game-container {
+                padding: 15px;
+                width: 95%;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 1.3em;
+                margin-bottom: 8px;
+                line-height: 1.2;
+            }
+
+            .story {
+                padding: 10px;
+                font-size: 0.9em;
+                margin-bottom: 15px;
+            }
+
+            .lives {
+                font-size: 1.5em;
+                margin-bottom: 10px;
+            }
+
+            .score {
+                font-size: 1.1em;
+                margin-bottom: 15px;
+            }
+
+            .score div {
+                font-size: 0.9em;
+            }
+
+            .message {
+                font-size: 1em;
+                min-height: 25px;
+                margin-bottom: 10px;
+            }
+
+            .game-area {
+                flex-direction: column;
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+
+            .wolf-cage {
+                width: 150px;
+                height: 150px;
+            }
+
+            .wolf {
+                font-size: 50px;
+            }
+
+            .division-box {
+                padding: 15px;
+                width: 100%;
+            }
+
+            .division-display {
+                font-size: 2em;
+                margin-bottom: 20px;
+            }
+
+            .long-division {
+                transform: scale(0.85);
+                transform-origin: center;
+            }
+
+            .quotient-area {
+                padding: 8px 15px 8px 15px;
+                min-width: 100px;
+            }
+
+            .dividend-area {
+                padding: 12px 15px;
+                min-width: 100px;
+            }
+
+            .divisor {
+                padding: 12px 15px;
+                margin-left: 8px;
+            }
+
+            .answer-input {
+                font-size: 1.5em;
+                padding: 12px;
+                max-width: 150px;
+            }
+
+            .button {
+                padding: 12px 25px;
+                font-size: 1.1em;
+                margin: 8px;
+            }
+
+            .division-box p {
+                font-size: 1em;
+                margin: 10px 0;
+            }
+
+            /* Character selection responsive */
+            .selection-container {
+                padding: 20px;
+                max-width: 95%;
+            }
+
+            .selection-container h2 {
+                font-size: 1.8em;
+                margin-bottom: 15px;
+            }
+
+            .selection-container p {
+                font-size: 1em;
+                margin-bottom: 20px;
+            }
+
+            .character-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 15px;
+            }
+
+            .character-option {
+                padding: 15px;
+            }
+
+            .character-option .emoji {
+                font-size: 3em;
+            }
+
+            .character-option .name {
+                font-size: 0.95em;
+            }
+
+            /* Game over and victory screens */
+            .game-over, .victory {
+                padding: 25px;
+                max-width: 90%;
+            }
+
+            .game-over h2, .victory h2 {
+                font-size: 2em;
+                margin-bottom: 15px;
+            }
+
+            .game-over p, .victory p {
+                font-size: 1.1em;
+                margin-bottom: 15px;
+            }
+        }
+
+        /* Extra small screens */
+        @media screen and (max-width: 360px) {
+            h1 {
+                font-size: 1.1em;
+            }
+
+            .story {
+                font-size: 0.85em;
+                padding: 8px;
+            }
+
+            .wolf-cage {
+                width: 120px;
+                height: 120px;
+            }
+
+            .wolf {
+                font-size: 40px;
+            }
+
+            .division-display {
+                font-size: 1.6em;
+            }
+
+            .long-division {
+                transform: scale(0.75);
+            }
+
+            .answer-input {
+                font-size: 1.3em;
+                padding: 10px;
+            }
+
+            .button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+
+            .character-option .emoji {
+                font-size: 2.5em;
+            }
+        }
     </style>
 </head>
 <body>

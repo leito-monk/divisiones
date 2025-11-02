@@ -21,10 +21,12 @@ Un divertido juego educativo con temática de Minecraft donde debes resolver div
 
 - ✅ Temática de Minecraft (colores pixelados, estilo retro)
 - ✅ Formato de división tradicional (con "ventanita")
+- ✅ Selección de personajes (12 animalitos diferentes)
 - ✅ Lobo animado que reacciona a tus respuestas
 - ✅ Explosión épica cuando pierdes
 - ✅ Efectos de sonido
 - ✅ Animaciones suaves
+- ✅ **Diseño responsive optimizado para móviles** 📱
 - ✅ Totalmente jugable en el navegador
 
 ## 🚀 Cómo Ejecutar
@@ -38,9 +40,38 @@ python3 -m http.server 8000
 ```
 Luego visita: http://localhost:8000
 
+## 📱 Mejoras de Responsive Design
+
+### Optimizaciones para Pantallas Pequeñas (nov 2024)
+
+El juego ahora está completamente optimizado para dispositivos móviles:
+
+#### Pantallas móviles (≤ 480px):
+- ✅ Título reducido y adaptado para evitar cortes de texto
+- ✅ Padding reducido en contenedores para aprovechar mejor el espacio
+- ✅ Visualización de división escalada adecuadamente
+- ✅ Jaula del lobo ajustada a tamaño óptimo (150px)
+- ✅ Fuentes y botones redimensionados para mejor legibilidad
+- ✅ Grid de selección de personajes en 2 columnas
+- ✅ Mensajes y textos adaptados
+
+#### Pantallas extra pequeñas (≤ 360px):
+- ✅ Escala adicional de elementos para dispositivos más pequeños
+- ✅ División visual con escala de 75%
+- ✅ Tamaños de fuente optimizados
+- ✅ Emojis de personajes ajustados
+
+#### Resultado:
+- 🎯 Sin elementos cortados en los bordes
+- 🎯 Mejor experiencia de usuario en móviles
+- 🎯 Mantiene la funcionalidad completa del juego
+- 🎯 Compatible con tablets y escritorio
+
 ## 🎯 Para Jazmin
 
 ¡Espero que te guste el juego! El lobo está esperando que lo rescates. ¿Podrás resolver todas las divisiones sin que la pantalla explote? 🐺✨
+
+Ahora puedes jugar desde tu teléfono móvil sin problemas! 📱
 
 ---
 
