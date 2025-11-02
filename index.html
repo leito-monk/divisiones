@@ -748,7 +748,6 @@
             // Update title and story
             document.querySelector('h1').innerHTML = `${selectedCharacter.emoji} ¡Ayuda ${selectedCharacter.article} ${selectedCharacter.name} a Escapar! ${selectedCharacter.emoji}`;
             document.querySelector('.story').innerHTML = `${storyArticle} ${selectedCharacter.name.toLowerCase()} está ${storyGender} en una jaula. ¡Resuelve las divisiones para ${storyPronoun}! Pero cuidado... si fallas 3 veces, ¡la pantalla explotará! 💥`;
-            document.getElementById('target').previousSibling.textContent = `Necesitas: `;
             
             // Update score text
             const scoreDiv = document.querySelector('.score div:nth-child(2)');
