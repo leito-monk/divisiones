@@ -30,6 +30,14 @@
             max-width: 600px;
             width: 90%;
             position: relative;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+
+        .game-container.active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         h1 {
@@ -368,9 +376,95 @@
             25% { transform: translateX(-10px); }
             75% { transform: translateX(10px); }
         }
+
+        /* Character selection styles */
+        .character-selection {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .character-selection.hidden {
+            display: none;
+        }
+
+        .selection-container {
+            background: #8B7355;
+            border: 8px solid #654321;
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 700px;
+            text-align: center;
+        }
+
+        .selection-container h2 {
+            color: #FFD700;
+            font-size: 2.5em;
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 20px;
+        }
+
+        .selection-container p {
+            color: #FFF;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+        }
+
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .character-option {
+            background: #F5DEB3;
+            border: 4px solid #8B4513;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .character-option:hover {
+            transform: scale(1.1);
+            background: #FFE4B5;
+            border-color: #FFD700;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .character-option .emoji {
+            font-size: 4em;
+        }
+
+        .character-option .name {
+            color: #654321;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
+    <div class="character-selection" id="characterSelection">
+        <div class="selection-container">
+            <h2>🌟 Elige tu Animalito 🌟</h2>
+            <p>¿A cuál de estos adorables animalitos quieres rescatar?</p>
+            <div class="character-grid" id="characterGrid">
+                <!-- Characters will be populated here -->
+            </div>
+        </div>
+    </div>
     <div class="explosion" id="explosion"></div>
 
     <div class="game-container" id="gameContainer">
@@ -466,6 +560,23 @@
         let currentAnswer = 0;
         const targetScore = 10;
 
+        // Character selection
+        const characters = [
+            { emoji: '🐺', name: 'Lobo', article: 'al' },
+            { emoji: '🐶', name: 'Perrito', article: 'al' },
+            { emoji: '🐱', name: 'Gatito', article: 'al' },
+            { emoji: '🐰', name: 'Conejito', article: 'al' },
+            { emoji: '🐻', name: 'Osito', article: 'al' },
+            { emoji: '🐼', name: 'Panda', article: 'al' },
+            { emoji: '🦊', name: 'Zorrito', article: 'al' },
+            { emoji: '🐨', name: 'Koala', article: 'al' },
+            { emoji: '🐹', name: 'Hámster', article: 'al' },
+            { emoji: '🐷', name: 'Cerdito', article: 'al' },
+            { emoji: '🐸', name: 'Ranita', article: 'a la' },
+            { emoji: '🐥', name: 'Pollito', article: 'al' }
+        ];
+        let selectedCharacter = null;
+
         // Elementos del DOM
         const scoreEl = document.getElementById('score');
         const targetEl = document.getElementById('target');
@@ -481,6 +592,8 @@
         const gameOverEl = document.getElementById('gameOver');
         const victoryEl = document.getElementById('victory');
         const gameContainer = document.getElementById('gameContainer');
+        const characterSelectionEl = document.getElementById('characterSelection');
+        const characterGridEl = document.getElementById('characterGrid');
 
         // Sonidos con Web Audio API
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -608,6 +721,52 @@
             }
         }
 
+        // Initialize character selection
+        function initCharacterSelection() {
+            characters.forEach((character, index) => {
+                const option = document.createElement('div');
+                option.className = 'character-option';
+                option.innerHTML = `
+                    <div class="emoji">${character.emoji}</div>
+                    <div class="name">${character.name}</div>
+                `;
+                option.addEventListener('click', () => selectCharacter(index));
+                characterGridEl.appendChild(option);
+            });
+        }
+
+        // Select character
+        function selectCharacter(index) {
+            selectedCharacter = characters[index];
+            wolfEl.textContent = selectedCharacter.emoji;
+            
+            // Determine gender-specific grammar
+            const isFeminine = selectedCharacter.article === 'a la';
+            const storyArticle = isFeminine ? 'Una' : 'Un';
+            const genderAdjective = isFeminine ? 'atrapada' : 'atrapado';
+            const storyPronoun = isFeminine ? 'liberarla' : 'liberarlo';
+            
+            // Update title and story
+            document.querySelector('h1').innerHTML = `${selectedCharacter.emoji} ¡Ayuda ${selectedCharacter.article} ${selectedCharacter.name} a Escapar! ${selectedCharacter.emoji}`;
+            document.querySelector('.story').innerHTML = `${storyArticle} ${selectedCharacter.name.toLowerCase()} está ${genderAdjective} en una jaula. ¡Resuelve las divisiones para ${storyPronoun}! Pero cuidado... si fallas 3 veces, ¡la pantalla explotará! 💥`;
+            
+            // Update score text
+            const scoreDiv = document.querySelector('.score div:nth-child(2)');
+            scoreDiv.innerHTML = `Necesitas: <span id="target">10</span> para liberar ${selectedCharacter.article} ${selectedCharacter.name.toLowerCase()}`;
+            
+            // Update victory message
+            document.querySelector('.victory p').innerHTML = `¡Liberaste ${selectedCharacter.article} ${selectedCharacter.name.toLowerCase()}! ${selectedCharacter.emoji}<br>¡Ahora es libre! 🌟`;
+            
+            // Update game over message
+            document.querySelector('.game-over p').innerHTML = `¡La jaula explotó!<br>Pero ${selectedCharacter.article} ${selectedCharacter.name.toLowerCase()} sigue ${genderAdjective}... 😢`;
+            
+            // Hide selection and start game
+            characterSelectionEl.classList.add('hidden');
+            gameContainer.classList.add('active');
+            generateDivision();
+            updateLives();
+        }
+
         // Event listeners
         checkButton.addEventListener('click', checkAnswer);
         answerInput.addEventListener('keypress', (e) => {
@@ -616,9 +775,8 @@
             }
         });
 
-        // Iniciar juego
-        generateDivision();
-        updateLives();
+        // Iniciar selección de personaje
+        initCharacterSelection();
     </script>
 </body>
 </html>
