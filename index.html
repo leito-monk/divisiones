@@ -740,14 +740,15 @@
             selectedCharacter = characters[index];
             wolfEl.textContent = selectedCharacter.emoji;
             
-            // Get correct article for story (un/una)
-            const storyArticle = selectedCharacter.article === 'a la' ? 'Una' : 'Un';
-            const storyGender = selectedCharacter.article === 'a la' ? 'atrapada' : 'atrapado';
-            const storyPronoun = selectedCharacter.article === 'a la' ? 'liberarla' : 'liberarlo';
+            // Determine gender-specific grammar
+            const isFeminine = selectedCharacter.article === 'a la';
+            const storyArticle = isFeminine ? 'Una' : 'Un';
+            const genderAdjective = isFeminine ? 'atrapada' : 'atrapado';
+            const storyPronoun = isFeminine ? 'liberarla' : 'liberarlo';
             
             // Update title and story
             document.querySelector('h1').innerHTML = `${selectedCharacter.emoji} ¡Ayuda ${selectedCharacter.article} ${selectedCharacter.name} a Escapar! ${selectedCharacter.emoji}`;
-            document.querySelector('.story').innerHTML = `${storyArticle} ${selectedCharacter.name.toLowerCase()} está ${storyGender} en una jaula. ¡Resuelve las divisiones para ${storyPronoun}! Pero cuidado... si fallas 3 veces, ¡la pantalla explotará! 💥`;
+            document.querySelector('.story').innerHTML = `${storyArticle} ${selectedCharacter.name.toLowerCase()} está ${genderAdjective} en una jaula. ¡Resuelve las divisiones para ${storyPronoun}! Pero cuidado... si fallas 3 veces, ¡la pantalla explotará! 💥`;
             
             // Update score text
             const scoreDiv = document.querySelector('.score div:nth-child(2)');
@@ -757,8 +758,7 @@
             document.querySelector('.victory p').innerHTML = `¡Liberaste ${selectedCharacter.article} ${selectedCharacter.name.toLowerCase()}! ${selectedCharacter.emoji}<br>¡Ahora es libre! 🌟`;
             
             // Update game over message
-            const gameOverGender = selectedCharacter.article === 'a la' ? 'atrapada' : 'atrapado';
-            document.querySelector('.game-over p').innerHTML = `¡La jaula explotó!<br>Pero ${selectedCharacter.article} ${selectedCharacter.name.toLowerCase()} sigue ${gameOverGender}... 😢`;
+            document.querySelector('.game-over p').innerHTML = `¡La jaula explotó!<br>Pero ${selectedCharacter.article} ${selectedCharacter.name.toLowerCase()} sigue ${genderAdjective}... 😢`;
             
             // Hide selection and start game
             characterSelectionEl.classList.add('hidden');
