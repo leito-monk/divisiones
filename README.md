@@ -40,6 +40,21 @@ python3 -m http.server 8000
 ```
 Luego visita: http://localhost:8000
 
+### 🎯 Parámetro de URL: Selección Automática de Personaje
+
+Ahora puedes empezar a jugar directamente con tu animalito favorito sin pasar por la pantalla de selección. Simplemente añade el parámetro `?character=nombre` a la URL:
+
+**Ejemplos:**
+- `index.html?character=Lobo` - Juega con el lobo 🐺
+- `index.html?character=Gatito` - Juega con el gatito 🐱
+- `index.html?character=Panda` - Juega con el panda 🐼
+- `index.html?character=Ranita` - Juega con la ranita 🐸
+
+**Personajes disponibles:**
+- Lobo, Perrito, Gatito, Conejito, Osito, Panda, Zorrito, Koala, Hámster, Cerdito, Ranita, Pollito
+
+**Nota:** El nombre del personaje no distingue entre mayúsculas y minúsculas (`Lobo`, `LOBO`, `lobo` funcionan igual).
+
 ## 📱 Mejoras de Responsive Design
 
 ### Optimizaciones para Pantallas Pequeñas (nov 2024)

@@ -974,8 +974,34 @@
             }
         });
 
+        // Check for URL parameter to auto-select character
+        function getCharacterFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const characterParam = urlParams.get('character');
+            
+            if (characterParam) {
+                // Try to find character by name (case-insensitive)
+                const normalizedParam = characterParam.toLowerCase();
+                const characterIndex = characters.findIndex(c => 
+                    c.name.toLowerCase() === normalizedParam
+                );
+                
+                if (characterIndex !== -1) {
+                    return characterIndex;
+                }
+            }
+            
+            return null;
+        }
+
         // Iniciar selección de personaje
         initCharacterSelection();
+        
+        // Auto-select character from URL parameter if provided
+        const autoSelectIndex = getCharacterFromURL();
+        if (autoSelectIndex !== null) {
+            selectCharacter(autoSelectIndex);
+        }
     </script>
 </body>
 </html>
