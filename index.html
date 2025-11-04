@@ -145,64 +145,142 @@
             padding: 20px;
         }
 
-        /* La "casita" de división larga */
+        /* Formato tradicional de división larga */
         .long-division {
-            display: grid;
-            grid-template-columns: auto auto;
-            grid-template-rows: auto auto;
-            gap: 0;
+            display: inline-block;
             position: relative;
+            padding: 0;
         }
 
-        /* Cociente arriba - respuesta */
-        .quotient-area {
-            grid-column: 1;
-            grid-row: 1;
-            border-bottom: 5px solid #333;
-            padding: 10px 20px 10px 20px;
-            text-align: center;
-            min-width: 120px;
-            background: #FFF9E6;
-            border-radius: 8px 8px 0 0;
+        /* Contenedor principal con la estructura de división */
+        .division-structure {
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+            gap: 5px;
         }
 
-        .quotient-placeholder {
-            font-size: 0.8em;
-            color: #FF6B6B;
-            font-weight: bold;
-        }
-
-        /* Dividendo a la izquierda dentro de la casita */
-        .dividend-area {
-            grid-column: 1;
-            grid-row: 2;
+        /* Divisor a la izquierda con estilo destacado */
+        .divisor {
             padding: 15px 20px;
-            background: #FFF;
-            border-radius: 8px 0 0 8px;
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+            border: 5px solid #4CAF50;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1em;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 120px;
+            min-width: 70px;
+            box-shadow: 0 3px 8px rgba(76, 175, 80, 0.3);
+        }
+
+        /* Contenedor del dividendo y cociente con la "casita" */
+        .dividend-quotient-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background: #FFF;
+            border-radius: 8px;
+            overflow: visible;
+        }
+
+        /* Línea superior horizontal y cociente */
+        .quotient-area {
+            padding: 10px 25px 8px 25px;
+            text-align: center;
+            min-width: 130px;
+            background: linear-gradient(to bottom, #FFF9E6 0%, #FFF5DC 100%);
+            border-radius: 8px 8px 0 0;
+            border-bottom: 6px solid #333;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Línea vertical a la izquierda (parte de la "L" invertida) - más visible */
+        .quotient-area::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 60%;
+            bottom: -6px;
+            width: 6px;
+            background: #333;
+            border-radius: 0 0 0 8px;
+            box-shadow: -2px 0 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Línea vertical superior (completando el símbolo de división) */
+        .quotient-area::after {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            bottom: 60%;
+            width: 6px;
+            background: #333;
+            border-radius: 8px 0 0 0;
+        }
+
+        .quotient-placeholder {
+            font-size: 0.85em;
+            color: #FF6B6B;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Dividendo debajo de la línea */
+        .dividend-area {
+            padding: 8px 25px 15px 25px;
+            background: #FFF;
+            border-radius: 0 0 8px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 130px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
         }
 
         .dividend {
             font-weight: bold;
+            color: #333;
         }
 
-        /* Divisor a la derecha */
-        .divisor {
-            grid-column: 2;
-            grid-row: 2;
-            padding: 15px 20px;
-            background: #E8F5E9;
-            border: 4px solid #4CAF50;
-            border-left: 5px solid #333;
+        /* Área para mostrar los pasos de la división */
+        .division-steps {
+            margin-top: 20px;
+            padding: 15px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 0%, rgba(240, 248, 255, 0.8) 100%);
             border-radius: 8px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 10px;
+            border: 3px dashed #8B4513;
+            font-size: 0.7em;
+            color: #654321;
+            text-align: left;
+            min-height: 60px;
+            display: none;
+            box-shadow: 0 2px 8px rgba(139, 69, 19, 0.2);
+        }
+
+        .division-steps.visible {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-line {
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
         }
 
         .answer-input {
@@ -528,19 +606,29 @@
                 transform-origin: center;
             }
 
+            .division-structure {
+                gap: 3px;
+            }
+
             .quotient-area {
-                padding: 8px 15px 8px 15px;
-                min-width: 100px;
+                padding: 8px 18px 6px 18px;
+                min-width: 110px;
             }
 
             .dividend-area {
-                padding: 12px 15px;
-                min-width: 100px;
+                padding: 6px 18px 12px 18px;
+                min-width: 110px;
             }
 
             .divisor {
                 padding: 12px 15px;
-                margin-left: 8px;
+                min-width: 55px;
+            }
+
+            .division-steps {
+                font-size: 0.6em;
+                padding: 10px;
+                margin-top: 15px;
             }
 
             .answer-input {
@@ -638,6 +726,12 @@
                 transform: scale(0.75);
             }
 
+            .division-steps {
+                font-size: 0.55em;
+                padding: 8px;
+                margin-top: 12px;
+            }
+
             .answer-input {
                 font-size: 1.3em;
                 padding: 10px;
@@ -697,19 +791,29 @@
                 <div class="division-display">
                     <div class="division-visual">
                         <div class="long-division">
-                            <!-- Cociente arriba (resultado) -->
-                            <div class="quotient-area">
-                                <span class="quotient-placeholder">?</span>
+                            <div class="division-structure">
+                                <!-- Divisor a la izquierda -->
+                                <div class="divisor">
+                                    <span id="divisor">3</span>
+                                </div>
+                                
+                                <!-- Dividendo y Cociente en estructura tradicional -->
+                                <div class="dividend-quotient-container">
+                                    <!-- Cociente arriba de la línea horizontal -->
+                                    <div class="quotient-area">
+                                        <span class="quotient-placeholder">?</span>
+                                    </div>
+                                    
+                                    <!-- Dividendo debajo de la línea -->
+                                    <div class="dividend-area">
+                                        <span class="dividend" id="dividend">12</span>
+                                    </div>
+                                </div>
                             </div>
-
-                            <!-- Dividendo a la izquierda dentro de la casita -->
-                            <div class="dividend-area">
-                                <span class="dividend" id="dividend">12</span>
-                            </div>
-
-                            <!-- Divisor a la derecha -->
-                            <div class="divisor">
-                                <span id="divisor">3</span>
+                            
+                            <!-- Área para mostrar pasos de la división -->
+                            <div class="division-steps" id="divisionSteps">
+                                <div class="step-line">Proceso de división:</div>
                             </div>
                         </div>
                     </div>
@@ -841,6 +945,27 @@
             answerInput.value = '';
             answerInput.focus();
             messageEl.textContent = '';
+            
+            // Ocultar los pasos de división al generar una nueva
+            const divisionSteps = document.getElementById('divisionSteps');
+            if (divisionSteps) {
+                divisionSteps.classList.remove('visible');
+            }
+        }
+
+        // Mostrar los pasos de la división
+        function showDivisionSteps() {
+            const divisionSteps = document.getElementById('divisionSteps');
+            if (!divisionSteps) return;
+            
+            // Calcular los pasos de la división larga
+            let stepsHTML = '<div class="step-line">📝 Proceso:</div>';
+            stepsHTML += `<div class="step-line">${currentDividend} ÷ ${currentDivisor} = ${currentAnswer}</div>`;
+            stepsHTML += `<div class="step-line">${currentDivisor} × ${currentAnswer} = ${currentDividend}</div>`;
+            stepsHTML += `<div class="step-line">${currentDividend} - ${currentDividend} = 0 ✓</div>`;
+            
+            divisionSteps.innerHTML = stepsHTML;
+            divisionSteps.classList.add('visible');
         }
 
         // Actualizar vidas
@@ -873,6 +998,9 @@
                 messageEl.textContent = '¡Correcto! 🎉';
                 messageEl.style.color = '#4CAF50';
 
+                // Mostrar los pasos de la división
+                showDivisionSteps();
+
                 // Animar el lobo
                 wolfEl.classList.add('happy');
                 setTimeout(() => wolfEl.classList.remove('happy'), 1000);
@@ -890,7 +1018,7 @@
                         }, 1000);
                     }, 500);
                 } else {
-                    setTimeout(generateDivision, 1500);
+                    setTimeout(generateDivision, 2500);
                 }
             } else {
                 // Respuesta incorrecta
