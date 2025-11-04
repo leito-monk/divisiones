@@ -1,32 +1,32 @@
-# 🐺 ¡Ayuda al Lobo a Escapar! - Juego de Divisiones
+# 🐾 ¡Ayuda al Animalito a Escapar! - Juego de Divisiones
 
-Un divertido juego educativo con temática de Minecraft donde debes resolver divisiones para liberar a un lobo atrapado en una jaula.
+Un divertido juego educativo con temática de Minecraft donde debes resolver divisiones para liberar a tu animalito favorito atrapado en una jaula. ¡Elige entre 12 adorables personajes!
 
 ## 🎮 Cómo Jugar
 
 1. Abre `index.html` en tu navegador
-2. Verás una división con el formato tradicional (número arriba en la "ventanita", divisor a la izquierda)
-3. Escribe el resultado de la división
-4. Presiona "Verificar" o Enter
-5. ¡Resuelve 10 divisiones correctamente para liberar al lobo!
+2. Elige tu animalito favorito (Lobo, Gatito, Panda, Ranita, etc.)
+3. Verás una división con el formato tradicional (número arriba en la "ventanita", divisor a la izquierda)
+4. Escribe el resultado de la división
+5. Presiona "Verificar" o Enter
+6. ¡Resuelve 10 divisiones correctamente para liberar al animalito!
 
 ## ⚠️ Reglas
 
 - Tienes 3 vidas (3 corazones ❤️)
 - Cada respuesta incorrecta te quita una vida
 - Si pierdes las 3 vidas... ¡LA PANTALLA EXPLOTA! 💥
-- Resuelve 10 divisiones correctamente para ganar y liberar al lobo
+- Resuelve 10 divisiones correctamente para ganar y liberar al animalito
 
 ## 🎨 Características
 
 - ✅ Temática de Minecraft (colores pixelados, estilo retro)
 - ✅ Formato de división tradicional (con "ventanita")
 - ✅ Selección de personajes (12 animalitos diferentes)
-- ✅ Lobo animado que reacciona a tus respuestas
+- ✅ Animalito animado que reacciona a tus respuestas
 - ✅ Explosión épica cuando pierdes
 - ✅ Efectos de sonido
 - ✅ Animaciones suaves
-- ✅ **Diseño responsive optimizado para móviles** 📱
 - ✅ Totalmente jugable en el navegador
 
 ## 🚀 Cómo Ejecutar
@@ -55,38 +55,9 @@ Ahora puedes empezar a jugar directamente con tu animalito favorito sin pasar po
 
 **Nota:** El nombre del personaje no distingue entre mayúsculas y minúsculas (`Lobo`, `LOBO`, `lobo` funcionan igual).
 
-## 📱 Mejoras de Responsive Design
-
-### Optimizaciones para Pantallas Pequeñas (nov 2024)
-
-El juego ahora está completamente optimizado para dispositivos móviles:
-
-#### Pantallas móviles (≤ 480px):
-- ✅ Título reducido y adaptado para evitar cortes de texto
-- ✅ Padding reducido en contenedores para aprovechar mejor el espacio
-- ✅ Visualización de división escalada adecuadamente
-- ✅ Jaula del lobo ajustada a tamaño óptimo (150px)
-- ✅ Fuentes y botones redimensionados para mejor legibilidad
-- ✅ Grid de selección de personajes en 2 columnas
-- ✅ Mensajes y textos adaptados
-
-#### Pantallas extra pequeñas (≤ 360px):
-- ✅ Escala adicional de elementos para dispositivos más pequeños
-- ✅ División visual con escala de 75%
-- ✅ Tamaños de fuente optimizados
-- ✅ Emojis de personajes ajustados
-
-#### Resultado:
-- 🎯 Sin elementos cortados en los bordes
-- 🎯 Mejor experiencia de usuario en móviles
-- 🎯 Mantiene la funcionalidad completa del juego
-- 🎯 Compatible con tablets y escritorio
-
 ## 🎯 Para Jazmin
 
-¡Espero que te guste el juego! El lobo está esperando que lo rescates. ¿Podrás resolver todas las divisiones sin que la pantalla explote? 🐺✨
-
-Ahora puedes jugar desde tu teléfono móvil sin problemas! 📱
+¡Espero que te guste el juego! Tu animalito favorito está esperando que lo rescates. ¿Podrás resolver todas las divisiones sin que la pantalla explote? 🐾✨
 
 ---
 
